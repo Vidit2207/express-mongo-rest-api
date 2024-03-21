@@ -1,0 +1,21 @@
+{
+  "name": "express-mongo-rest-api",
+  "version": "1.0.0",
+  "description": "A template for an Express App that can connect to a MongoDB Database using a URI",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": ""
+  },
+  "author": "Vidit Modi",
+  "license": "MIT",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.1",
+    "mongoose": "^8.2.2"
+  }
+}
