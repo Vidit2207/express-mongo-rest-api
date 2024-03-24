@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const { PrismLogger } = require("prism-logger");
 
 const MONGODB_DATABASE_NAME = process.env.MONGODB_DATABASE_NAME;
 const MONGODB_URI = process.env.MONGODB_URI.replace(
@@ -11,21 +12,21 @@ const connectToServer = async (app, port) => {
     const isDBConnected = await mongoose.connect(MONGODB_URI);
 
     if (!isDBConnected) {
-      console.log("MongoDB Connection Failed");
+      PrismLogger.error("MongoDB Connection Failed");
       throw new Error("MongoDB Connection Failed");
     }
-    console.log(
+    PrismLogger.successBg(
       "Connected to MongoDB Server. Database: " + MONGODB_DATABASE_NAME
     );
     const isServerConnected = await app.listen(port);
     if (!isServerConnected) {
-      console.log("Server Connection Failed");
+      PrismLogger.error("Server Connection Failed");
       throw new Error("Server Connection Failed");
     }
-    console.log("Server is listening at port: " + port);
+    PrismLogger.successBg("Server is listening at port: " + port);
   } catch (error) {
-    console.log("Error in Mongoose Connection");
-    console.log(error);
+    PrismLogger.errorBg("Error in Mongoose Connection");
+    PrismLogger.error(error);
   }
 };
 
@@ -40,12 +41,13 @@ const clearAllCollections = async () => {
       const Model = mongoose.model(modelName);
 
       await Model.deleteMany({});
-      console.log(`Deleted all documents in collection: ${modelName}`);
+      PrismLogger.success(`Deleted all documents in collection: ${modelName}`);
     }
 
-    console.log("All collections cleared.");
+    PrismLogger.successBg("All collections cleared.");
   } catch (error) {
-    console.error("Error clearing collections:\n", error);
+    PrismLogger.errorBg("Error clearing collections");
+    PrismLogger.error(error);
   }
 };
 
